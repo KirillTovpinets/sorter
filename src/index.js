@@ -29,18 +29,19 @@ class Sorter {
           let temp = indices[i];
           indices[i] = indices[j];
           indices[j] = temp;
-          sortIndices = true;
         }
       }
     }
     if (this.compareFunction !== undefined) { 
+      var testFunction = this.compareFunction(1, 0);
+      var isReverse = false;
+      if (testFunction === -1) {
+        isReverse = true;
+      }
       for (var i = 0; i < indices.length - 1; i++) {
         for (var j = i + 1; j < indices.length; j++) {
-          if (this.compareFunction(this.array[indices[i]], this.array[indices[j]])) {
-            let temp = this.array[indices[j]];
-            this.array[indices[j]] = this.array[indices[i]];
-            this.array[indices[i]] = temp;
-          }else if(sortIndices){
+          if ((this.compareFunction(this.array[indices[i]], this.array[indices[j]]) > 0 && !isReverse) ||
+              (this.compareFunction(this.array[indices[i]], this.array[indices[j]]) > 0 && isReverse)) {
             let temp = this.array[indices[j]];
             this.array[indices[j]] = this.array[indices[i]];
             this.array[indices[i]] = temp;
